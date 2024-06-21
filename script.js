@@ -2,8 +2,16 @@ document.addEventListener("DOMContentLoaded", () => {
     createGrid(16);
 })
 
-
-
+const message = document.querySelector('.js-message');
+const inputGridSize = document.querySelector('#input-grid');
+const submitButton = document.querySelector('.submit-button');
+submitButton.addEventListener('click', () => {
+    if (inputGridSize.value <= 9) {
+        message.textContent = 'ERROR: Grid size is too small.'
+    } else if (inputGridSize.value > 100) {
+        message.textContent = 'ERROR: Grid size is too big'
+    } else createGrid(inputGridSize.value);
+});
 
 
 function createGrid(size) {
@@ -28,6 +36,7 @@ function createGrid(size) {
 
 function colorDiv() {
     this.classList.add("grid-hover");
+    this.style.background = 'black';
 };
 
 function deactivateGridElement(event) {
