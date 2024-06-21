@@ -40,6 +40,10 @@ header h1 {
     margin-top: 15px;
 }
 
+.grid-size {
+    margin-bottom: 10px;
+}
+
 .grid-container {
     display: grid;
     height: 600px;
@@ -74,4 +78,3 @@ button:hover {
     border-color: cyan;
     background: black;
 }
-
