@@ -16,7 +16,7 @@ submitButton.addEventListener('click', () => {
         errorMessage.textContent = 'ERROR: Grid size is too big'
     } else {
         errorMessage.textContent = '';
-        createGrid(inputGridSize.value);
+        createGrid(parseInt(inputGridSize.value));
     }
 });
 
@@ -26,6 +26,20 @@ clearButton.addEventListener('click', (event) => {
     clearGrid();
 });
 
+
+inputGridSize.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        const inputValue = parseInt(inputGridSize.value);
+        if (inputValue <= 9) {
+            errorMessage.textContent = 'ERROR: Grid size is too small.'
+        } else if (inputValue > 100) {
+            errorMessage.textContent = 'ERROR: Grid size is too big'
+        } else {
+            errorMessage.textContent = '';
+            createGrid(inputValue);
+        }
+    };
+});
 
 function createGrid(size) {
     grid.innerHTML = '';
@@ -53,13 +67,13 @@ function colorDiv() {
 function deactivateGridElement(event) {
     if (event.propertyName == "transform") {
         this.classList.remove("grid-hover");
+        this.style.background = 'rgb(55,55,55)';
     }
-    this.style.background = 'rgb(55,55,55)';
 }
 
 function clearGrid() {
     const squares = document.querySelectorAll('.cell');
     squares.forEach(square => {
-        square.style.background = 'white';
+        square.style.backgroundColor = 'white';
     });
 };
