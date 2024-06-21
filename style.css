@@ -38,6 +38,8 @@ header h1 {
 
 .grid-color {
     margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .grid-size {
@@ -77,4 +79,8 @@ button:hover {
     transform: scale(1.3);
     border-color: cyan;
     background: black;
+}
+
+footer {
+    margin-bottom: 10px;
 }
