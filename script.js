@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
     createGrid(16);
 })
 
+
+
+
+
 function createGrid(size) {
     const grid = document.querySelector('.grid-container');
 
@@ -13,11 +17,22 @@ function createGrid(size) {
 
     let numDivs = size * size;
 
-    for (i = 0; i < numDivs; i++) {
-        let div = document.createElement('div');
-        grid.appendChild(div);
-        div.addEventListener('mousemove', colorDiv);
-        div.style.border = '1px solid grey';
+    for (let i = 0; i < numDivs; i++) {
+        let square = document.createElement('div');
+        square.classList.add('cell');
+        square.addEventListener('mousemove', colorDiv);
+        square.addEventListener('transitionend', deactivateGridElement);
+        grid.append(square);
     };
-}
+};
 
+function colorDiv() {
+    this.classList.add("grid-hover");
+};
+
+function deactivateGridElement(event) {
+    if (event.propertyName == "transform") {
+        this.classList.remove("grid-hover");
+    }
+    this.style.background = 'rgb(55,55,55)';
+}
