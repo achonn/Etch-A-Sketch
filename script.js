@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     createGrid(16);
-})
-
+});
 
 const submitButton = document.querySelector('.submit-button');
 const clearButton = document.querySelector('.clear-button');
