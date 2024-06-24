@@ -1,118 +1,117 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const submitButton = document.querySelector('.submit-button');
-    const clearButton = document.querySelector('.clear-button');
-    const blackButton = document.querySelector('#black-grid');
-    const redButton = document.querySelector('#red-grid');
-    const blueButton = document.querySelector('#blue-grid');
-    const randomButton = document.querySelector('#random-grid');
-    const eraserButton = document.querySelector('#eraser');
-    const inputGridSize = document.querySelector('#input-grid');
-    const errorMessage = document.querySelector('.js-message');
-    const grid = document.querySelector('.grid-container');
-    let color = 'rgb(55,55,55)';
-
-
     createGrid(16);
+})
 
-    
-    // Button Click Events
-    submitButton.addEventListener('click', () => {
-        if (inputGridSize.value <= 9) {
+
+const submitButton = document.querySelector('.submit-button');
+const clearButton = document.querySelector('.clear-button');
+const blackButton = document.querySelector('#black-grid');
+const redButton = document.querySelector('#red-grid');
+const blueButton = document.querySelector('#blue-grid');
+const randomButton = document.querySelector('#random-grid');
+const eraserButton = document.querySelector('#eraser');
+const inputGridSize = document.querySelector('#input-grid');
+const errorMessage = document.querySelector('.js-message');
+const grid = document.querySelector('.grid-container');
+let color = 'rgb(55,55,55)';
+
+
+// Button Click Events
+submitButton.addEventListener('click', () => {
+    if (inputGridSize.value <= 9) {
+        errorMessage.textContent = 'ERROR: Grid size is too small.'
+    } else if (inputGridSize.value > 100) {
+        errorMessage.textContent = 'ERROR: Grid size is too big'
+    } else {
+        errorMessage.textContent = '';
+        createGrid(parseInt(inputGridSize.value));
+    }
+});
+
+
+clearButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    clearGrid();
+});
+
+
+blackButton.addEventListener('click', () => {
+    color = 'rgb(55,55,55)';
+});
+
+
+redButton.addEventListener('click', () => {
+    color = 'red';
+});
+
+
+blueButton.addEventListener('click', () => {
+    color = 'blue';
+});
+
+
+randomButton.addEventListener('click', () => {
+    color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+})
+
+
+eraserButton.addEventListener('click', () => {
+    color = 'white';
+})
+
+
+inputGridSize.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        const inputValue = parseInt(inputGridSize.value);
+        if (inputValue <= 9) {
             errorMessage.textContent = 'ERROR: Grid size is too small.'
-        } else if (inputGridSize.value > 100) {
+        } else if (inputValue > 100) {
             errorMessage.textContent = 'ERROR: Grid size is too big'
         } else {
             errorMessage.textContent = '';
-            createGrid(parseInt(inputGridSize.value));
+            createGrid(inputValue);
         }
-    });
-    
-    
-    clearButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        clearGrid();
-    });
-    
-    
-    blackButton.addEventListener('click', () => {
-        color = 'rgb(55,55,55)';
-    });
-    
-    
-    redButton.addEventListener('click', () => {
-        color = 'red';
-    });
-    
-    
-    blueButton.addEventListener('click', () => {
-        color = 'blue';
-    });
-    
-    
-    randomButton.addEventListener('click', () => {
-        color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
-    })
-    
-    
-    eraserButton.addEventListener('click', () => {
-        color = 'white';
-    })
-    
-    
-    inputGridSize.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            const inputValue = parseInt(inputGridSize.value);
-            if (inputValue <= 9) {
-                errorMessage.textContent = 'ERROR: Grid size is too small.'
-            } else if (inputValue > 100) {
-                errorMessage.textContent = 'ERROR: Grid size is too big'
-            } else {
-                errorMessage.textContent = '';
-                createGrid(inputValue);
-            }
-        };
-    });
-    
-    
-    // Functions
-    function createGrid(size) {
-        // Clear the Grid when the function is called.
-        grid.innerHTML = '';
-    
-        grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-        grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-    
-    
-        let numDivs = size * size;
-    
-        for (let i = 0; i < numDivs; i++) {
-            let square = document.createElement('div');
-            square.classList.add('cell');
-            square.addEventListener('mousemove', colorDiv);
-            square.addEventListener('transitionend', deactivateGridElement);
-            grid.append(square);
-        };
     };
-    
-    
-    function colorDiv() {
-        this.classList.add("grid-hover");
-    };
-    
-    
-    function deactivateGridElement(event) {
-        if (event.propertyName == "transform") {
-            this.classList.remove("grid-hover");
-            this.style.background = `${color}`;
-        }
-    }
-    
-    
-    function clearGrid() {
-        const squares = document.querySelectorAll('.cell');
-        squares.forEach(square => {
-            square.style.backgroundColor = 'white';
-        });
-    };
-})
+});
 
+
+// Functions
+function createGrid(size) {
+    // Clear the Grid when the function is called.
+    grid.innerHTML = '';
+
+    grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+
+
+    let numDivs = size * size;
+
+    for (let i = 0; i < numDivs; i++) {
+        let square = document.createElement('div');
+        square.classList.add('cell');
+        square.addEventListener('mousemove', colorDiv);
+        square.addEventListener('transitionend', deactivateGridElement);
+        grid.append(square);
+    };
+};
+
+
+function colorDiv() {
+    this.classList.add("grid-hover");
+};
+
+
+function deactivateGridElement(event) {
+    if (event.propertyName == "transform") {
+        this.classList.remove("grid-hover");
+        this.style.background = `${color}`;
+    }
+}
+
+
+function clearGrid() {
+    const squares = document.querySelectorAll('.cell');
+    squares.forEach(square => {
+        square.style.backgroundColor = 'white';
+    });
+};
